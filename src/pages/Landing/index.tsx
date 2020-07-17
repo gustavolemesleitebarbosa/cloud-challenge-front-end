@@ -44,16 +44,17 @@ const Landing: React.FC = () => {
   const [numberOfAirports, setNumberOfAirports] = useState<number>(3);
   const [numberOfRows, setNumberOfRows] = useState(10);
   const [numberOfColumns, setNumberOfColumns] = useState<number>(10);
+  const [numberOfGridColumns, setNumberOfGridColumns] = useState<number>(10);
   const [numberOfClouds, setNumberOfClouds] = useState<number>(4);
 
   const formRef = useRef<FormHandles>(null);
 
   useEffect(() => {
     const maximumNumberOfAirports = (numberOfColumns*numberOfRows) -4
-    const randomNumberOfAirports= Math.floor(Math.random() * maximumNumberOfAirports) + 3
+    const randomNumberOfAirports= Math.floor(Math.random() * (maximumNumberOfAirports-2)) + 3
     setNumberOfAirports(randomNumberOfAirports)
     const maximumNumberOfClouds = (numberOfColumns*numberOfRows) -randomNumberOfAirports;
-    const randomNumberOfClouds= Math.floor(Math.random() * maximumNumberOfClouds) + 4
+    const randomNumberOfClouds= Math.floor(Math.random() * (maximumNumberOfClouds-3)) + 4
     setNumberOfClouds(randomNumberOfClouds)
     Math.floor(Math.random() * (numberOfColumns * numberOfRows) + 1);
   }, [numberOfColumns,numberOfRows])
@@ -87,6 +88,7 @@ const Landing: React.FC = () => {
       };
       const response  = await api.get('/',options);
       const {daysToAllHits,daysToFirstHit, history} = response.data;
+      setNumberOfGridColumns(numberOfColumns);
       setDaysToFirstHit(daysToFirstHit);
       setDaysToAllHits(daysToAllHits);
       setSkyHistory(history);
@@ -169,7 +171,7 @@ const Landing: React.FC = () => {
      {skyHistory.length>0 && skyHistory.map((skyInfo, index)=><>
       <div>
       <h3>{index=== 0?`Dia ${index} (hoje)`:`Dia ${index}`}</h3>
-      <Grid numberOfColumns={numberOfColumns} skyInfo={skyInfo} />
+      <Grid numberOfColumns={numberOfGridColumns} skyInfo={skyInfo} />
       </div>
      </>)}
      </GridsContainer>
