@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from 'react';
+import React, { useState, useRef, useCallback, useEffect } from 'react';
 import { Form } from '@unform/web';
 import * as Yup from 'yup';
 import { FormHandles } from '@unform/core';
@@ -47,6 +47,16 @@ const Landing: React.FC = () => {
   const [numberOfClouds, setNumberOfClouds] = useState<number>(4);
 
   const formRef = useRef<FormHandles>(null);
+
+  useEffect(() => {
+    const maximumNumberOfAirports = (numberOfColumns*numberOfRows) -4
+    const randomNumberOfAirports= Math.floor(Math.random() * maximumNumberOfAirports) + 3
+    setNumberOfAirports(randomNumberOfAirports)
+    const maximumNumberOfClouds = (numberOfColumns*numberOfRows) -randomNumberOfAirports;
+    const randomNumberOfClouds= Math.floor(Math.random() * maximumNumberOfClouds) + 4
+    setNumberOfClouds(randomNumberOfClouds)
+    Math.floor(Math.random() * (numberOfColumns * numberOfRows) + 1);
+  }, [numberOfColumns,numberOfRows])
 
   const handleSubmit = useCallback(async (data: SkyFormData) => {
     try {

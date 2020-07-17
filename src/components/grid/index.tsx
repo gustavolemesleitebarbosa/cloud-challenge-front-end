@@ -7,7 +7,6 @@ interface GridProps {
 }
 
 const Grid: React.FC<GridProps> = ({ skyInfo, numberOfColumns }) => {
-  console.log('fucking sky info',skyInfo)
   return (
     <GridContainer numberOfColumns={numberOfColumns}>
       {skyInfo.map(infoRow => {
